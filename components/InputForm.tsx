@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import * as pdfjsLib from 'pdfjs-dist';
-import { ResponseFormat } from '../types';
+import { ResponseFormat, OutputFormat } from '../types';
 import Spinner from './Spinner';
 
 // Configure the worker to use the CDN version matching the installed pdfjs-dist version
 pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.mjs`;
 
 interface InputFormProps {
+  apiKey: string;
+  setApiKey: (value: string) => void;
   customerRequest: string;
   setCustomerRequest: (value: string) => void;
   businessInfo: string;
@@ -15,6 +17,8 @@ interface InputFormProps {
   setLemmaIotInfo: (value: string) => void;
   responseFormat: ResponseFormat;
   setResponseFormat: (value: ResponseFormat) => void;
+  outputFormat: OutputFormat;
+  setOutputFormat: (value: OutputFormat) => void;
   isLoading: boolean;
   onSubmit: () => void;
   modelName: string;
@@ -25,6 +29,8 @@ const MAX_CONTENT_LENGTH = 50000; // 50,000 characters limit
 const AVAILABLE_MODELS = ['llama3-8b-8192', 'llama3-70b-8192', 'mixtral-8x7b-32768', 'gemma2-9b-it'];
 
 const InputForm: React.FC<InputFormProps> = ({
+  apiKey,
+  setApiKey,
   customerRequest,
   setCustomerRequest,
   businessInfo,
@@ -33,6 +39,8 @@ const InputForm: React.FC<InputFormProps> = ({
   setLemmaIotInfo,
   responseFormat,
   setResponseFormat,
+  outputFormat,
+  setOutputFormat,
   isLoading,
   onSubmit,
   modelName,
@@ -109,22 +117,37 @@ const InputForm: React.FC<InputFormProps> = ({
         </h2>
       </div>
 
-      <div>
-         <label htmlFor="modelName" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-          AI Model
-        </label>
-        <select
-          id="modelName"
-          className="w-full p-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-brand-primary focus:border-brand-primary transition duration-150 ease-in-out"
-          value={modelName}
-          onChange={(e) => setModelName(e.target.value)}
-        >
-          {AVAILABLE_MODELS.map((model) => (
-            <option key={model} value={model}>
-              {model}
-            </option>
-          ))}
-        </select>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label htmlFor="apiKey" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            Groq API Key
+          </label>
+          <input
+            type="password"
+            id="apiKey"
+            className="w-full p-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-brand-primary focus:border-brand-primary transition duration-150 ease-in-out"
+            placeholder="gsk_..."
+            value={apiKey}
+            onChange={(e) => setApiKey(e.target.value)}
+          />
+        </div>
+        <div>
+           <label htmlFor="modelName" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            AI Model
+          </label>
+          <select
+            id="modelName"
+            className="w-full p-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-brand-primary focus:border-brand-primary transition duration-150 ease-in-out"
+            value={modelName}
+            onChange={(e) => setModelName(e.target.value)}
+          >
+            {AVAILABLE_MODELS.map((model) => (
+              <option key={model} value={model}>
+                {model}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
       
       <div>
@@ -192,22 +215,41 @@ const InputForm: React.FC<InputFormProps> = ({
         />
       </div>
 
-      <div>
-        <label htmlFor="responseFormat" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-          Response Format
-        </label>
-        <select
-          id="responseFormat"
-          className="w-full p-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-brand-primary focus:border-brand-primary transition duration-150 ease-in-out"
-          value={responseFormat}
-          onChange={(e) => setResponseFormat(e.target.value as ResponseFormat)}
-        >
-          {Object.values(ResponseFormat).map((format) => (
-            <option key={format} value={format}>
-              {format}
-            </option>
-          ))}
-        </select>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label htmlFor="responseFormat" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Response Format
+          </label>
+          <select
+            id="responseFormat"
+            className="w-full p-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-brand-primary focus:border-brand-primary transition duration-150 ease-in-out"
+            value={responseFormat}
+            onChange={(e) => setResponseFormat(e.target.value as ResponseFormat)}
+          >
+            {Object.values(ResponseFormat).map((format) => (
+              <option key={format} value={format}>
+                {format}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label htmlFor="outputFormat" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Output Format
+          </label>
+          <select
+            id="outputFormat"
+            className="w-full p-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-brand-primary focus:border-brand-primary transition duration-150 ease-in-out"
+            value={outputFormat}
+            onChange={(e) => setOutputFormat(e.target.value as OutputFormat)}
+          >
+            {Object.values(OutputFormat).map((format) => (
+              <option key={format} value={format}>
+                {format}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
 
       <div className="pt-2">

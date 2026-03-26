@@ -1,20 +1,19 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# LemmaIoT AI Response Composer
 
-# Run and deploy your AI Studio app
+An AI-powered application that helps compose perfect customer replies using Groq's blazing-fast models.
 
-This contains everything you need to run your app locally.
+## Setup
 
-View your app in AI Studio: https://ai.studio/apps/c8ac9a64-849f-4a56-b407-5167e6be66c3
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Create a `.env` file based on `.env.example` and add your Groq API key:
+   ```env
+   GROQ_API_KEY=your_groq_api_key_here
+   ```
+4. Run the development server: `npm run dev`
 
-## Run Locally
-
-**Prerequisites:**  Node.js
-
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## Features
+- AI-powered response generation using Groq models (Llama 3, Mixtral, Gemma)
+- Fetch knowledge base context directly from URLs (HTML, PDF, Plain Text)
+- Multiple output formats (Plain Text, Markdown, HTML)
+- Copy to clipboard functionality

@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { ResponseFormat, GeneratedResponse, OutputFormat } from './types';
-import { generateCustomerResponse } from './services/geminiService';
+import { generateCustomerResponse } from './services/groqService';
 import Header from './components/Header';
 import InputForm from './components/InputForm';
 import ResponseDisplay from './components/ResponseDisplay';
@@ -71,6 +71,8 @@ const App: React.FC = () => {
       <main className="container mx-auto p-4 md:p-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <InputForm
+            apiKey={apiKey}
+            setApiKey={setApiKey}
             customerRequest={customerRequest}
             setCustomerRequest={setCustomerRequest}
             businessInfo={businessInfo}
@@ -79,6 +81,8 @@ const App: React.FC = () => {
             setLemmaIotInfo={setLemmaIotInfo}
             responseFormat={responseFormat}
             setResponseFormat={setResponseFormat}
+            outputFormat={outputFormat}
+            setOutputFormat={setOutputFormat}
             isLoading={isLoading}
             onSubmit={handleGenerateResponse}
             modelName={modelName}
@@ -89,7 +93,6 @@ const App: React.FC = () => {
             isLoading={isLoading}
             error={error}
             outputFormat={outputFormat}
-            setOutputFormat={setOutputFormat}
           />
         </div>
       </main>

@@ -8,7 +8,6 @@ interface ResponseDisplayProps {
   isLoading: boolean;
   error: string | null;
   outputFormat: OutputFormat;
-  setOutputFormat: (format: OutputFormat) => void;
 }
 
 const loadingMessages = [
@@ -44,7 +43,7 @@ const getFormattedResponse = (response: GeneratedResponse, format: OutputFormat)
 };
 
 
-const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ response, isLoading, error, outputFormat, setOutputFormat }) => {
+const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ response, isLoading, error, outputFormat }) => {
   const [isCopied, setIsCopied] = useState(false);
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
 
@@ -125,21 +124,6 @@ const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ response, isLoading, 
           <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
             Generated Response
           </h2>
-          <div className="relative">
-            <select
-                id="outputFormat"
-                value={outputFormat}
-                onChange={(e) => setOutputFormat(e.target.value as OutputFormat)}
-                className="pl-3 pr-8 py-1.5 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-brand-primary focus:border-brand-primary transition duration-150 ease-in-out text-sm"
-                aria-label="Select output format"
-            >
-                 {Object.values(OutputFormat).map((format) => (
-                    <option key={format} value={format}>
-                        {format}
-                    </option>
-                ))}
-            </select>
-          </div>
        </div>
       <div className="flex-grow relative">
         {renderContent()}
