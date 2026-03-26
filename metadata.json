@@ -1,0 +1,5 @@
+{
+  "name": "LemmaIoT Response Composer",
+  "description": "An AI-powered tool to help compose professional responses to customer requests for LemmaIoT Cloud Solutions. It analyzes customer needs and generates tailored messages for email, WhatsApp, or articles.",
+  "requestFramePermissions": []
+}
